@@ -1,33 +1,35 @@
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummyHead = new ListNode(0);
-        ListNode current = dummyHead;
-        int carry = 0;
+public class AddTwoNumbers {
 
-        while (l1 != null || l2 != null || carry != 0) {
-            int val1 = (l1 != null) ? l1.val : 0;
-            int val2 = (l2 != null) ? l2.val : 0;
+    public ListNode add(ListNode listA, ListNode listB) {
 
-            int sum = val1 + val2 + carry;
-            carry = sum / 10;
+        ListNode sentinelHead = new ListNode(0);
+        ListNode tail = sentinelHead;
+        ListNode pointerA = listA;
+        ListNode pointerB = listB;
+        int carryOver = 0;
 
-            current.next = new ListNode(sum % 10);
-            current = current.next;
+        while (pointerA != null || pointerB != null || carryOver != 0) {
 
-            if (l1 != null) l1 = l1.next;
-            if (l2 != null) l2 = l2.next;
+            int digitA = (pointerA != null) ? pointerA.val : 0;
+            int digitB = (pointerB != null) ? pointerB.val : 0;
+            int sum = digitA + digitB + carryOver;
+            int newDigit = sum % 10;
+            carryOver = sum / 10;
+            tail.next = new ListNode(newDigit);
+            tail = tail.next;
+
+            if (pointerA != null) pointerA = pointerA.next;
+            if (pointerB != null) pointerB = pointerB.next;
         }
+        return sentinelHead.next;
+    }
 
-        return dummyHead.next;
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 }
